@@ -1,22 +1,22 @@
-const userForm = new UserForm();
+'use strict';
 
-userForm.loginFormCallback = data => {
-  ApiConnector.login(data, response => {
-    if (!response.success) userForm.setLoginErrorMessage(response.error);
-    else {
-      userForm.setLoginErrorMessage('Авторзация прошла успешно!');
-      location.reload();
-    }
-  });
+const userForm = new UserForm();
+userForm.loginFormCallback = function (data) {
+    ApiConnector.login(data, callback => {
+        if (!callback.success) {
+            this.setLoginErrorMessage('Ошибка при вводе данных или данного пользователя не существует!');
+        } else {
+            location.reload();
+        }
+    })
 }
 
-userForm.registerFormCallback = data => {
-  ApiConnector.register(data, response => {
-    console.log(response);
-    if (!response.success) userForm.setRegisterErrorMessage(response.error);
-    else {
-      userForm.setRegisterErrorMessage('Регистрация прошла успешно!');
-      location.reload();
-    }
-  });
+userForm.registerFormCallback = function (data) {
+    ApiConnector.register(data, callback => {
+        if (!callback.success) {
+            this.setRegisterErrorMessage('Введены некорректные данные');
+        } else {
+            location.reload();
+        }
+    })
 }
